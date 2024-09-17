@@ -1,7 +1,6 @@
 package com.hyunil.board_back.dto.response.user;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import com.hyunil.board_back.common.ResponseCode;

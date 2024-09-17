@@ -12,7 +12,7 @@ import com.hyunil.board_back.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
     
