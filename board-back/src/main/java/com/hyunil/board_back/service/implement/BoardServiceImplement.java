@@ -10,7 +10,9 @@ import com.hyunil.board_back.dto.request.board.PostBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostCommentRequestDto;
 import com.hyunil.board_back.dto.response.ResponseDto;
 import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
+import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
+import com.hyunil.board_back.dto.response.board.IncreaseViewCountResponseDto;
 import com.hyunil.board_back.dto.response.board.PostBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.PostCommentResponseDto;
 import com.hyunil.board_back.dto.response.board.PutFavoriteResponseDto;
@@ -24,6 +26,7 @@ import com.hyunil.board_back.repository.FavoriteRepository;
 import com.hyunil.board_back.repository.ImageRepository;
 import com.hyunil.board_back.repository.UserRepository;
 import com.hyunil.board_back.repository.resultSet.GetBoardResultSet;
+import com.hyunil.board_back.repository.resultSet.GetCommentListResultSet;
 import com.hyunil.board_back.repository.resultSet.GetFavoriteListResultSet;
 import com.hyunil.board_back.service.BoardService;
 
@@ -52,10 +55,7 @@ public class BoardServiceImplement implements BoardService{
             if(resultSet == null) return GetBoardResponseDto.noExistBoard();
 
             imageEntities = imageRepository.findByBoardNumber(boardNumber);
-            
-            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
-            boardEntity.increaseViewCount();
-            boardRepository.save(boardEntity);
+
 
         }catch(Exception e){
             e.printStackTrace();
@@ -83,6 +83,26 @@ public class BoardServiceImplement implements BoardService{
             return ResponseDto.databaseError();
         }
         return GetFavoriteListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer boardNumber) {
+        
+        List<GetCommentListResultSet> resultSets = new ArrayList<>();
+
+        try{
+
+            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+            if(!existedBoard) return GetCommentListResponseDto.noExistBoard();
+
+            resultSets = commentRepository.getCommentList(boardNumber);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetCommentListResponseDto.success(resultSets);
     }
 
     @Override
@@ -173,6 +193,24 @@ public class BoardServiceImplement implements BoardService{
         return PutFavoriteResponseDto.success();
 
 
+    }
+
+    @Override
+    public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber) {
+
+        try{    
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return IncreaseViewCountResponseDto.noExistBoard();
+            
+            boardEntity.increaseViewCount();
+            boardRepository.save(boardEntity);
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return IncreaseViewCountResponseDto.success();
+    
     }
 
 
