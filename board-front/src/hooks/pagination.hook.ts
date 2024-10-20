@@ -21,7 +21,7 @@ const usePagination = <T>(countPerPage: number) => {
     const setView = () => {
         const FIRST_INDEX = countPerPage * (currentPage - 1); // 0
         const LAST_INDEX = totalList.length > countPerPage * currentPage ? countPerPage * currentPage : totalList.length;
-        const viewPageList = totalList.slice(FIRST_INDEX, LAST_INDEX);
+        const viewList = totalList.slice(FIRST_INDEX, LAST_INDEX);
         setViewList(viewList);
     }
     //          function: 보여줄 페이지 리스트 추출 함수      //
@@ -54,7 +54,7 @@ const usePagination = <T>(countPerPage: number) => {
     //          effect: current page가 변경될떄마다 실행        //
     useEffect(setView, [currentPage]);
     //          effect: current section가 변경될떄마다 실행        //
-    useEffect(setViewPage, [currentPage]);
+    useEffect(setViewPage, [currentSection]);
 
     return {
         currentPage,
