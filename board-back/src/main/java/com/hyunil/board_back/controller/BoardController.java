@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hyunil.board_back.dto.request.board.PatchBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostCommentRequestDto;
 import com.hyunil.board_back.dto.response.board.DeleteBoardResponseDto;
@@ -20,6 +21,7 @@ import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
 import com.hyunil.board_back.dto.response.board.IncreaseViewCountResponseDto;
+import com.hyunil.board_back.dto.response.board.PatchBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.PostBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.PostCommentResponseDto;
 import com.hyunil.board_back.dto.response.board.PutFavoriteResponseDto;
@@ -98,6 +100,16 @@ public class BoardController {
         return response;
     }
 
+    @PatchMapping("/{boardNumber}")
+    public ResponseEntity<? super PatchBoardResponseDto> patchBoard(
+        @RequestBody @Valid PatchBoardRequestDto requestBody,
+        @PathVariable("boardNumber") Integer boardNumber,
+        @AuthenticationPrincipal String email
+    ){
+        ResponseEntity<? super PatchBoardResponseDto> response = boardService.patchBoard(requestBody, boardNumber, email);
+        return response;
+    }
+
     @DeleteMapping("/{boardNumber}")
     public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(
         @PathVariable("boardNumber") Integer boardNumber,
@@ -106,5 +118,7 @@ public class BoardController {
         ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber, email);
         return response;
     }
+
+
 
 }
