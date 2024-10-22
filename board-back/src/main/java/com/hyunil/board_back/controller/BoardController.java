@@ -20,6 +20,7 @@ import com.hyunil.board_back.dto.response.board.DeleteBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
+import com.hyunil.board_back.dto.response.board.GetLatestBoardListResponseDto;
 import com.hyunil.board_back.dto.response.board.IncreaseViewCountResponseDto;
 import com.hyunil.board_back.dto.response.board.PatchBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.PostBoardResponseDto;
@@ -62,6 +63,13 @@ public class BoardController {
         ResponseEntity<? super IncreaseViewCountResponseDto> response = boardService.increaseViewCount(boardNumber);
         return response;
     }
+
+    @GetMapping("/latest-list")
+    public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
+        ResponseEntity<? super GetLatestBoardListResponseDto> response = boardService.getLatestBoardList();
+        return response;
+    }
+    
 
     @GetMapping("/{boardNumber}/comment-list")
     public ResponseEntity<? super GetCommentListResponseDto> getCommentList(

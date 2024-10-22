@@ -18,7 +18,7 @@ export default function Authentication() {
   //        state: 쿠키 상태            //
   const [cookies, setCookies] = useCookies();
   //        function: navigater 함수    //
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   //        component: sign in card 컴포넌트      //
   const SignInCard = () => {
 
@@ -53,7 +53,7 @@ export default function Authentication() {
       const expires = new Date(now + expirationTime * 1000);
 
       setCookies('accessToken', token, { expires, path: MAIN_PATH() });
-      navigator(MAIN_PATH());
+      navigate(MAIN_PATH());
     }
 
     //        event handler : 로그인 버튼 클릭 이벤트 처리   //
