@@ -258,7 +258,7 @@ export default function Header() {
           <div className='icon-box'>
             <div className='icon logo-dark-icon'></div>
           </div>
-          <div className='header-logo'>{'Hyuns Board'}</div>
+          <div className='header-logo'>{'나의 이야기'}</div>
         </div>
         <div className='header-right-box'>
           {(isAuthPage || isMainPage || isSearchPage || isBoardDetailPage) && <SearchButton />}

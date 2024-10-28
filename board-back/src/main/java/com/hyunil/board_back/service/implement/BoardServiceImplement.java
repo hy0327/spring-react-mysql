@@ -1,11 +1,15 @@
 package com.hyunil.board_back.service.implement;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.hyunil.board_back.dto.object.BoardListItem;
 import com.hyunil.board_back.dto.request.board.PatchBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostCommentRequestDto;
@@ -15,6 +19,7 @@ import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetLatestBoardListResponseDto;
+import com.hyunil.board_back.dto.response.board.GetTop3BoardListResponseDto;
 import com.hyunil.board_back.dto.response.board.IncreaseViewCountResponseDto;
 import com.hyunil.board_back.dto.response.board.PatchBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.PostBoardResponseDto;
@@ -38,6 +43,7 @@ import com.hyunil.board_back.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImplement implements BoardService{
@@ -127,6 +133,26 @@ public class BoardServiceImplement implements BoardService{
        }
 
        return GetLatestBoardListResponseDto.success(boardListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList() {
+        
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+        try {
+            
+            Date beforeWeek = Date.from(Instant.now().minus(7, ChronoUnit.DAYS));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String sevenDaysAgo = simpleDateFormat.format(beforeWeek);
+            boardListViewEntities = boardListViewRepository.findTop3ByWriteDatetimeGreaterThanOrderByFavoriteCountDescCommentCountDescViewCountDescWriteDatetimeDesc(sevenDaysAgo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetTop3BoardListResponseDto.success(boardListViewEntities);
     }
 
     @Override
