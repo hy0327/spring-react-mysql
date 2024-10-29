@@ -5,6 +5,11 @@ import { BoardListItem } from 'types/interface';
 import { latestBoardListMock, top3BoardListMock } from 'mocks';
 import BoardItem from 'components/BoardItem';
 import Pagination from 'components/Pagination';
+import { getTop3BoardListRequest } from 'apis';
+import { GetTop3BoardListResponseDto } from 'apis/response/board';
+import { ResponseDto } from 'apis/response';
+import { useNavigate } from 'react-router-dom';
+import { SEARCH_PATH } from 'constant';
 
 //          component: 메인 화면 컴포넌트           //
 export default function Main() {
@@ -15,9 +20,20 @@ export default function Main() {
     //          state: 주간 top3 게시물 리스트 상태       //
     const [top3BoardList, setTop3BoardList] = useState<BoardListItem[]>([]);
 
+    //        function: getTop3BoardListResponse 처리 함수    //
+    const getTop3BoardListResponse = (responseBody: GetTop3BoardListResponseDto | ResponseDto | null) => {
+      if(!responseBody) return;
+      const { code } = responseBody;
+      if(code == 'DBE') alert('데이터베이스 오류입니다.');
+      if(code !== 'SU') return;
+
+      const { top3List } = responseBody as GetTop3BoardListResponseDto;
+      setTop3BoardList(top3List);
+    }
+
     //        effect: 첫 마운트 시 실행될 함수        //
     useEffect(() => {
-      setTop3BoardList(top3BoardListMock);
+      getTop3BoardListRequest().then(getTop3BoardListResponse);
     }, []);
       
     //          render: 메인 화면 상단 컴포넌트 렌더링           //
@@ -39,10 +55,18 @@ export default function Main() {
   //        component: 메인 화면 하단 컴포넌트      //
   const MainBottom = () => {
     
+    //        function: 네비게이트 함수       //
+    const navigate = useNavigate();
+
     //          state: 최신 게시물 리스트 상태 (임시)     //
     const [currentBoardList, setCurrentBoardList] = useState<BoardListItem[]>([]);
     //          state: 인기 검색 리스트 상태        //
     const [popularWordList, setPopularWordList] = useState<string[]>([]);
+
+    //        event handler: 인기 검색어 클릭 이벤트 처리       //
+    const onPopularWordClickHandler = (word: string) => {
+      navigate(SEARCH_PATH(word));
+    }
 
     //        effect: 첫 마운트 시 실행될 함수        //
     useEffect(() => {
@@ -60,10 +84,10 @@ export default function Main() {
             </div>
             <div className='main-bottom-popular-box'>
               <div className='main-bottom-popular-card'>
-                <div className='main-bottom-popular-card-box'>
+                <div className='main-bottom-popular-card-container'>
                   <div className='main-bottom-popular-card-title'>{'인기 검색어'}</div>
                   <div className='main-bottom-popular-card-contents'>
-                    {popularWordList.map(word => <div className='word-badge'>{word}</div>)}
+                    {popularWordList.map(word => <div className='word-badge' onClick={() => onPopularWordClickHandler(word)}>{word}</div>)}
                   </div>
                 </div>
               </div>
