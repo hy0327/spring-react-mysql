@@ -21,6 +21,7 @@ import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetLatestBoardListResponseDto;
+import com.hyunil.board_back.dto.response.board.GetSearchBoardListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetTop3BoardListResponseDto;
 import com.hyunil.board_back.dto.response.board.IncreaseViewCountResponseDto;
 import com.hyunil.board_back.dto.response.board.PatchBoardResponseDto;
@@ -85,6 +86,16 @@ public class BoardController {
         ResponseEntity<? super GetCommentListResponseDto> response = boardService.getCommentList(boardNumber);
         return response;
     }
+
+    @GetMapping(value={"/search-list/{searchWord}", "/search-list/{searchWord}/{preSearchWord}"})
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(
+        @PathVariable("searchWord") String searchWord,
+        @PathVariable(value="preSearchWord", required=false) String preSearchWord
+    ) {
+        ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoardList(searchWord, searchWord);
+        return response;
+    }
+    
     
 
     @PostMapping("")
