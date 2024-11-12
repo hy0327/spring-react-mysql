@@ -2,6 +2,7 @@ package com.hyunil.board_back.controller;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetLatestBoardListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetSearchBoardListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetTop3BoardListResponseDto;
+import com.hyunil.board_back.dto.response.board.GetUserBoardListResponseDto;
 import com.hyunil.board_back.dto.response.board.IncreaseViewCountResponseDto;
 import com.hyunil.board_back.dto.response.board.PatchBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.PostBoardResponseDto;
@@ -96,7 +98,13 @@ public class BoardController {
         return response;
     }
     
-    
+    @GetMapping("/user-board-list/{email}")
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(
+        @PathVariable("email") String email
+    ) {
+        ResponseEntity<? super GetUserBoardListResponseDto> response = boardService.getUserBoardList(email);
+        return response;
+    }
 
     @PostMapping("")
     public ResponseEntity<? super PostBoardResponseDto> postBoard(
