@@ -46,6 +46,9 @@
       "last 1 safari version"
     ]
   },
+  "homepage": "https://hy0327.github.io/spring-react-mysql/",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build",
   "devDependencies": {
     "gh-pages": "^6.2.0"
   }
