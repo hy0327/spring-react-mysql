@@ -26,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,8 +48,7 @@
     ]
   },
   "homepage": "https://hy0327.github.io/spring-react-mysql/",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d build",
+
   "devDependencies": {
     "gh-pages": "^6.2.0"
   }
