@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/spring-react-mysql/static/css/main.699a4378.css",
+    "main.js": "/spring-react-mysql/static/js/main.4877c456.js",
+    "static/media/auth-background.png": "/spring-react-mysql/static/media/auth-background.f4dde02a2b607b99f71a.png",
+    "index.html": "/spring-react-mysql/index.html",
+    "main.699a4378.css.map": "/spring-react-mysql/static/css/main.699a4378.css.map",
+    "main.4877c456.js.map": "/spring-react-mysql/static/js/main.4877c456.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.699a4378.css",
+    "static/js/main.4877c456.js"
+  ]
+}
