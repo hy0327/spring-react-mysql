@@ -15,6 +15,7 @@ import com.hyunil.board_back.dto.request.board.PostBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostCommentRequestDto;
 import com.hyunil.board_back.dto.response.ResponseDto;
 import com.hyunil.board_back.dto.response.board.DeleteBoardResponseDto;
+import com.hyunil.board_back.dto.response.board.DeleteCommentResponseDto;
 import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
@@ -36,6 +37,7 @@ import com.hyunil.board_back.entity.SearchLogEntity;
 import com.hyunil.board_back.repository.BoardListViewRepository;
 import com.hyunil.board_back.repository.BoardRepository;
 import com.hyunil.board_back.repository.CommentRepository;
+import com.hyunil.board_back.repository.DeleteCommentRepository;
 import com.hyunil.board_back.repository.FavoriteRepository;
 import com.hyunil.board_back.repository.ImageRepository;
 import com.hyunil.board_back.repository.SearchLogRepository;
@@ -57,6 +59,7 @@ public class BoardServiceImplement implements BoardService{
     private final ImageRepository imageRepository;
     private final FavoriteRepository favoriteRepository;
     private final CommentRepository commentRepository;
+    private final DeleteCommentRepository deleteCommentRepository;
     private final BoardListViewRepository boardListViewRepository;
     private final SearchLogRepository searchLogRepository;
 
@@ -379,6 +382,27 @@ public class BoardServiceImplement implements BoardService{
         }
 
         return DeleteBoardResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super DeleteCommentResponseDto> deleteComment(Integer boardNumber, Integer commentNumber, String email) {
+        try {
+            
+            boolean existedUser = userRepository.existsByEmail(email);
+            if(!existedUser) return DeleteCommentResponseDto.noExistUser();
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            CommentEntity commentEntity = deleteCommentRepository.findByBoardNumberAndCommentNumber(boardNumber, commentNumber);
+
+            deleteCommentRepository.delete(commentEntity);
+            boardEntity.decreaseCommentCount();
+            boardRepository.save(boardEntity);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return DeleteCommentResponseDto.success();
     }
 
    

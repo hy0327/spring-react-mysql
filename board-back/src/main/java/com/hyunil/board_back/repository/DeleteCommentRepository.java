@@ -6,13 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+
 import com.hyunil.board_back.entity.CommentEntity;
 import com.hyunil.board_back.repository.resultSet.GetCommentListResultSet;
 
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface CommentRepository extends JpaRepository<CommentEntity, Integer>{
+public interface DeleteCommentRepository extends JpaRepository<CommentEntity, Integer>{
+
+    boolean existsByBoardNumberAndCommentNumber(Integer boardNumber, Integer commentNumber);
+
+    CommentEntity findByBoardNumberAndCommentNumber(Integer boardNumber, Integer commentNumber);
     
     @Query(
         value=
@@ -26,6 +31,7 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
         "INNER JOIN user AS U " +
         "ON C.user_email = U.email " +
         "WHERE C.board_number = ?1 " +
+        "AND C.comment_number = ?2 " +
         "ORDER BY writeDatetime DESC ",
         nativeQuery = true
     )

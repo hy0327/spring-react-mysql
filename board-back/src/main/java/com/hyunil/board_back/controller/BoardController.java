@@ -18,6 +18,7 @@ import com.hyunil.board_back.dto.request.board.PatchBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostCommentRequestDto;
 import com.hyunil.board_back.dto.response.board.DeleteBoardResponseDto;
+import com.hyunil.board_back.dto.response.board.DeleteCommentResponseDto;
 import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
@@ -152,6 +153,18 @@ public class BoardController {
         ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber, email);
         return response;
     }
+
+    @DeleteMapping("/{boardNumber}/{commentNumber}")
+    public ResponseEntity<? super DeleteCommentResponseDto> deleteComment(
+        @PathVariable("boardNumber") Integer boardNumber, 
+        @PathVariable("commentNumber") Integer commentNumber,
+        @AuthenticationPrincipal String email
+    ) {
+        ResponseEntity<? super DeleteCommentResponseDto> response = boardService.deleteComment(boardNumber, commentNumber, email);
+        return response;
+    }
+
+
 
 
 

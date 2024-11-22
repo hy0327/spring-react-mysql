@@ -100,6 +100,7 @@ export default function Main() {
     useEffect(() => {
       getLatestBoardListRequest().then(getLatestBoardListResponse);
       getPopularListRequest().then(getPopularListResponse);
+      
     }, []);
     //          render: 메인 화면 하단 컴포넌트 렌더링           //
     return (

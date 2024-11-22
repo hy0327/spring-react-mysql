@@ -64,6 +64,10 @@ public class BoardEntity {
         this.commentCount++;
     }
 
+    public void decreaseCommentCount() {
+        this.commentCount--;
+    }
+
     public void patchBoard(PatchBoardRequestDto dto) {
         this.title = dto.getTitle();
         this.content = dto.getContent();

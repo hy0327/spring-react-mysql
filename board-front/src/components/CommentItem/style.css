@@ -55,3 +55,18 @@
     font-weight: 500;
     line-height: 150%;
 }
+
+.comment-list-item-delete{
+    color: rgba(0, 0, 0, 0.7);
+    position: relative;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.comment-list-item-delete:hover{
+    color: rgba(0, 0, 0, 1);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+

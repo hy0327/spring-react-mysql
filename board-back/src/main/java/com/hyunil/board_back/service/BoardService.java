@@ -7,6 +7,7 @@ import com.hyunil.board_back.dto.request.board.PatchBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostBoardRequestDto;
 import com.hyunil.board_back.dto.request.board.PostCommentRequestDto;
 import com.hyunil.board_back.dto.response.board.DeleteBoardResponseDto;
+import com.hyunil.board_back.dto.response.board.DeleteCommentResponseDto;
 import com.hyunil.board_back.dto.response.board.GetBoardResponseDto;
 import com.hyunil.board_back.dto.response.board.GetCommentListResponseDto;
 import com.hyunil.board_back.dto.response.board.GetFavoriteListResponseDto;
@@ -34,4 +35,5 @@ public interface BoardService {
     ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber, String email);
     ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber);
     ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email);
+    ResponseEntity<? super DeleteCommentResponseDto> deleteComment(Integer boardNumber, Integer commentNumber, String email);
 }
