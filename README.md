@@ -21,7 +21,7 @@ REST API 기반으로 데이터를 처리하는 웹 서비스 구조를
 
 ### Frontend
 - React
-- JavaScript
+- TypeScript
 - Axios
 
 ### Database
