@@ -46,6 +46,7 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(request -> request
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/", "/api/v1/auth/**", "/api/v1/search/**", "/file/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/*").permitAll()
                 .anyRequest().authenticated()
@@ -62,7 +63,8 @@ public class WebSecurityConfig {
     protected CorsConfigurationSource corsConfigrationSource(){
         
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOrigin("https://spring-react-mysql.vercel.app");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
 
