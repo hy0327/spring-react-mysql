@@ -37,3 +37,8 @@ REST API 기반으로 데이터를 처리하는 웹 서비스 구조를
 - 데이터 수정
 - 데이터 삭제
 - REST API 기반 프론트엔드 연동
+
+## Deployment
+- Frontend : React on Vercel
+- Backend : Spring Boot REST API on Render
+- Database : MySQL database on Railway
