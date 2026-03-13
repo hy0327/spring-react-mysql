@@ -10,6 +10,9 @@ Spring Boot 기반 REST API와 React 프론트엔드를 사용하여 구현한
 REST API 기반으로 데이터를 처리하는 웹 서비스 구조를
 구현하는 것을 목표로 개발했습니다.
 
+테스트아이디 : test@test.com
+테스트비밀번호 : testtest
+
 ## Tech Stack
 
 ### Backend
